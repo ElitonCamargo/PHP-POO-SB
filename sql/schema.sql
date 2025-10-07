@@ -43,3 +43,15 @@ CREATE TABLE IF NOT EXISTS Contas (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (cliente_id) REFERENCES Clientes(id) ON DELETE CASCADE
 );
+
+CREATE TABLE IF NOT EXISTS Transacoes (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    conta_id INT,
+    data_transacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    tipo ENUM('deposito', 'saque', 'transferencia') NOT NULL,
+    valor DECIMAL(15, 2) NOT NULL,
+    descricao VARCHAR(255),
+    FOREIGN KEY (conta_id) REFERENCES Contas(id) ON DELETE CASCADE
+);
+CREATE INDEX idx_cliente_id ON Contas(cliente_id);
+CREATE INDEX idx_conta_id ON Transacoes(conta_id);
