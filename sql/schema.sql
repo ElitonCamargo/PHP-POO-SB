@@ -28,5 +28,18 @@ CREATE TABLE IF NOT EXISTS Clientes_PJ (
     cliente_id INT PRIMARY KEY,
     cnpj VARCHAR(18) NOT NULL UNIQUE,
     razao_social VARCHAR(100),
+    data_fundacao DATE,
+    FOREIGN KEY (cliente_id) REFERENCES Clientes(id) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS Contas (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    cliente_id INT,
+    tipo_conta ENUM('corrente', 'poupanca') NOT NULL,
+    saldo DECIMAL(15, 2) DEFAULT 0.00,
+    limite DECIMAL(15, 2) DEFAULT 0.00,
+    status ENUM('ativa', 'inativa') DEFAULT 'ativa',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (cliente_id) REFERENCES Clientes(id) ON DELETE CASCADE
 );
