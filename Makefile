@@ -31,3 +31,17 @@ reset-db:
 # Executa apenas o seed (dados iniciais)
 inserts:
 	docker exec -i $(CONTAINER_NAME) mysql -u $(DB_USER) -p$(DB_PASS) $(DB_NAME) < $(INSERTS)
+
+# Up container Dockers
+start:
+	docker-compose up -d
+# Down container Dockers
+stop:
+	docker-compose down
+# Restart container Dockers
+restart: 
+	stop start
+
+# Verifica logs do container Web
+logs:
+	docker logs -f web
