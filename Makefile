@@ -8,6 +8,7 @@ DB_NAME=sistema_bancario
 SCHEMA=./sql/schema.sql
 SCHEMADROP=./sql/schema_drop.sql
 INSERTS=./sql/inserts.sql
+PROCEDURES=./sql/procedures.sql
 
 # Apaga tabelas do banco de dados
 drop-tables:
@@ -17,9 +18,14 @@ drop-tables:
 create-tables:
 	docker exec -i $(CONTAINER_NAME) mysql -u $(DB_USER) -p$(DB_PASS) < $(SCHEMA)
 
+# Cria procedures
+create-procedures:
+	docker exec -i $(CONTAINER_NAME) mysql -u $(DB_USER) -p$(DB_PASS) $(DB_NAME) < $(PROCEDURES)
+
 # Apaga e recria o schema e popula com dados iniciais
 reset-db:
 	docker exec -i $(CONTAINER_NAME) mysql -u $(DB_USER) -p$(DB_PASS) < $(SCHEMA)
+	docker exec -i $(CONTAINER_NAME) mysql -u $(DB_USER) -p$(DB_PASS) $(DB_NAME) < $(PROCEDURES)
 	docker exec -i $(CONTAINER_NAME) mysql -u $(DB_USER) -p$(DB_PASS) $(DB_NAME) < $(INSERTS)
 
 # Executa apenas o seed (dados iniciais)
