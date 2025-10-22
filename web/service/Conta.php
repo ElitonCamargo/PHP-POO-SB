@@ -45,11 +45,27 @@ abstract class Conta{
         }
         $this->limite = $limite;
     }
+
     public function getLimite(): float
     {
         return $this->limite;
     }
 
+    public abstract function Depositar(float $valor): void;
+    public abstract function Sacar(float $valor): void;
 
+    public function __toString(): string
+    {
+        return "Conta Número: {$this->id}, Titular: {$this->titular->getNome()}, Saldo: {$this->saldo}";
+    }
 
+    public function Transferir(Conta $contaDestino, float $valor): void
+    {
+        if ($contaDestino == null)
+        {
+            throw new Exception(message: "A conta de destino não pode ser nula.");
+        }
+        $this->Sacar(valor: $valor);
+        $contaDestino->Depositar(valor: $valor);
+    }
 }
