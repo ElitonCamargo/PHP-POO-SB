@@ -22,4 +22,34 @@ abstract class Conta{
         return $this->id;
     }
 
+    public function setTitular(Titular $titular): void
+    {        
+        $this->titular = $titular;
+    }
+
+    public function getTitular(): Titular
+    {
+        return $this->titular;
+    }
+
+    public function getSaldo(): float
+    {
+        return $this->saldo;
+    }
+
+    public function setLimite(float $limite): void
+    {
+        if ($limite < 0)
+        {
+            throw new Exception("O limite não pode ser negativo.");
+        }
+        $this->limite = $limite;
+    }
+    public function getLimite(): float
+    {
+        return $this->limite;
+    }
+
+
+
 }
